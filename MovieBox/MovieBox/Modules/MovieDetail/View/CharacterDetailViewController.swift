@@ -13,7 +13,8 @@ class CharacterDetailViewController: UIViewController {
     let indicatorView = IndicatorView.init(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
     
     @IBOutlet private weak var tableView: UITableView!
-
+    @IBOutlet weak var tableViewHeightConstraint: NSLayoutConstraint!
+    
     var viewModel: CharacterDetailViewModelProtocol! {
         didSet {
             
@@ -52,12 +53,22 @@ class CharacterDetailViewController: UIViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 50.0
         tableView.register(cell: CharacterDetailCell.self)
+        tableView.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
     }
     
     func reloadData() {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.reloadData()
+    }
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if(keyPath == "contentSize"){
+            if (change?[.newKey]) != nil {
+                let contentHeight: CGFloat = self.tableView.contentSize.height
+                self.tableViewHeightConstraint.constant = contentHeight
+            }
+        }
     }
 }
 

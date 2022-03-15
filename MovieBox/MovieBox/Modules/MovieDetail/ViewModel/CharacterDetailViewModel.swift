@@ -68,7 +68,7 @@ class CharacterDetailViewModel: CharacterDetailViewModelProtocol {
     }
     
     func getComicList() -> [ComicModel]{
-        return self.comicList ?? []
+        return self.comicList?.reversed() ?? []
     }
     
     private func notify(_ output: CharacterDetailViewModelOutput) {

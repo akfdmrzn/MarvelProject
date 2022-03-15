@@ -61,6 +61,8 @@
 		BFE514FE27E0D5FA00FF35CC /* ComicResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE514FD27E0D5FA00FF35CC /* ComicResponse.swift */; };
 		BFE5150027E0DB9800FF35CC /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE514FF27E0DB9800FF35CC /* DateExtensions.swift */; };
 		BFE5150227E0E3AB00FF35CC /* ExtensionString.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE5150127E0E3AB00FF35CC /* ExtensionString.swift */; };
+		BFE5150427E1507900FF35CC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BFE5150327E1507800FF35CC /* GoogleService-Info.plist */; };
+		BFE5150627E1528300FF35CC /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE5150527E1528300FF35CC /* Defaults.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -137,6 +139,8 @@
 		BFE514FD27E0D5FA00FF35CC /* ComicResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicResponse.swift; sourceTree = "<group>"; };
 		BFE514FF27E0DB9800FF35CC /* DateExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
 		BFE5150127E0E3AB00FF35CC /* ExtensionString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionString.swift; sourceTree = "<group>"; };
+		BFE5150327E1507800FF35CC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		BFE5150527E1528300FF35CC /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -498,8 +502,10 @@
 		BFE514E127E096BA00FF35CC /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				BFE5150327E1507800FF35CC /* GoogleService-Info.plist */,
 				BFE514F927E0C19C00FF35CC /* spiderman.json */,
 				BFE514E227E096C200FF35CC /* Extensions */,
+				BFE5150527E1528300FF35CC /* Defaults.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -626,6 +632,7 @@
 			files = (
 				17F6F6FC2368221E0089D0EF /* CharacterDetailViewController.xib in Resources */,
 				BFE514FA27E0C19C00FF35CC /* spiderman.json in Resources */,
+				BFE5150427E1507900FF35CC /* GoogleService-Info.plist in Resources */,
 				BFE514F827E0C05600FF35CC /* IndicatorView.xib in Resources */,
 				17F6F6CB236738AC0089D0EF /* MovieItemCell.xib in Resources */,
 				17F6F706236839AF0089D0EF /* CharacterDetailCell.xib in Resources */,
@@ -737,6 +744,7 @@
 				BFE514EA27E096CD00FF35CC /* UICollectionViewExtensions.swift in Sources */,
 				BFE514D427E0965000FF35CC /* APIError.swift in Sources */,
 				BFE514EC27E096CD00FF35CC /* OptionalExtensions.swift in Sources */,
+				BFE5150627E1528300FF35CC /* Defaults.swift in Sources */,
 				BFE514DD27E0968300FF35CC /* CharacterResponse.swift in Sources */,
 				BFE514D327E0965000FF35CC /* APIEngineProtocol.swift in Sources */,
 				BFE514D527E0965000FF35CC /* APIEngine.swift in Sources */,

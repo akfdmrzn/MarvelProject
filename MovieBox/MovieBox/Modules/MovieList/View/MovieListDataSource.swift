@@ -9,14 +9,22 @@
 import UIKit
 
 final class MovieListDataSource: NSObject {
+    
     typealias MovieDidSelectItemHandler = (Int) -> ()
-
+    typealias ScrollEndOfHandler = () -> ()
+    typealias ReloadForFavouriteHandler = () -> ()
+    
     var movies: [CharacterModel] = []
     var didSelectItemHandler: MovieDidSelectItemHandler
-
-    init(with movies: [CharacterModel], didSelectItemHandler: @escaping MovieDidSelectItemHandler) {
+    var comeEndOfScroll: ScrollEndOfHandler
+    var reloadForFavourite: ReloadForFavouriteHandler
+    var cellHeight : CGFloat = 0.0
+    
+    init(with movies: [CharacterModel], didSelectItemHandler: @escaping MovieDidSelectItemHandler,comeEndOfScroll: @escaping ScrollEndOfHandler,reloadForFavourite : @escaping ReloadForFavouriteHandler) {
         self.movies = movies
         self.didSelectItemHandler = didSelectItemHandler
+        self.comeEndOfScroll = comeEndOfScroll
+        self.reloadForFavourite = reloadForFavourite
     }
 }
 
@@ -29,6 +37,7 @@ extension MovieListDataSource: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieItemCell.identifier, for: indexPath) as! MovieItemCell
         let movie = movies[indexPath.row]
         cell.setup(with: movie)
+        cell.delegate = self
         return cell
     }
 }
@@ -36,6 +45,12 @@ extension MovieListDataSource: UICollectionViewDataSource {
 extension MovieListDataSource: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         didSelectItemHandler(indexPath.row)
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
+            self.comeEndOfScroll()
+        }
     }
 }
 
@@ -58,5 +73,10 @@ extension MovieListDataSource: UICollectionViewDelegateFlowLayout {
         let leftMargin = CGFloat(AppConstants.ContentCollection.HorizontalSpaceBetweenItems)
         let topMargin = CGFloat(AppConstants.ContentCollection.VerticleSpaceBetweenItems)
         return UIEdgeInsets(top: topMargin, left: leftMargin, bottom: topMargin, right: leftMargin)
+    }
+}
+extension MovieListDataSource : MovieItemCellDelegate{
+    func tappedFavourite() {
+        self.reloadForFavourite()
     }
 }

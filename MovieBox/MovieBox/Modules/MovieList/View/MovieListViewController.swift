@@ -13,8 +13,6 @@ final class MovieListViewController: UIViewController {
     let indicatorView = IndicatorView.init(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
     
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var collectionViewHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var scrollView: UIScrollView!
     private(set) var dataSource: MovieListDataSource?
     
     var viewModel: MovieListViewModelProtocol! {
@@ -29,52 +27,36 @@ final class MovieListViewController: UIViewController {
         super.viewDidLoad()
         
         registerCells()
-        viewModel.load(indexType: .defaultType)
+        viewModel.load()
     }
     
     override func viewWillLayoutSubviews() {
-        self.collectionViewHeightConstraint.constant = self.collectionView.contentSize.height
         self.loadViewIfNeeded()
     }
     
     // MARK: Data
     
-    public func reloaDataSource() {
+    public func reloaDataSource(justSection : Bool = false) {
         dataSource = viewModel.getDataSource()
         collectionView.dataSource = dataSource
         collectionView.delegate = dataSource
-        collectionView.reloadData()
-        self.scrollView.setContentOffset(CGPoint.init(x: 0, y: -100), animated: true)
-        
+        if justSection {
+            collectionView.reloadItems(at: [IndexPath.init(item: 0, section: 0)])
+        }
+        else{
+            collectionView.reloadData()
+        }
+        if viewModel.getLimitCount() > 30 {
+            UIView.animate(withDuration: 0.3) {
+                self.collectionView.contentOffset.y = self.collectionView.contentOffset.y + ((AppConstants.ContentCollection.PosterImageRatio * self.collectionView.frame.size.width) / 2)
+            }
+        }
     }
     
     // MARK: UI
     
     private func registerCells() {
-        collectionView.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
         collectionView.register(MovieItemCell.self)
-    }
-    
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if(keyPath == "contentSize"){
-            if (change?[.newKey]) != nil {
-                let contentHeight: CGFloat = self.collectionView.contentSize.height
-                self.collectionViewHeightConstraint.constant = contentHeight
-            }
-        }
-    }
-    
-    @IBAction func btnActPager(_ sender: UIButton) {
-        switch sender.tag {
-        case 0:
-            viewModel.load(indexType: .backType)
-            break;
-        case 1:
-            viewModel.load(indexType: .nextType)
-            break;
-        default:
-            break;
-        }
     }
     
 }
@@ -98,6 +80,12 @@ extension MovieListViewController: MovieListViewModelDelegate {
                 guard let self = self else { return }
                 self.indicatorView.removeFromSuperview()
                 self.reloaDataSource()
+            }
+        case .reloadJustSections:
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.indicatorView.removeFromSuperview()
+                self.reloaDataSource(justSection: true)
             }
         }
     }

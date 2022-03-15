@@ -8,10 +8,18 @@
 
 import UIKit
 
+protocol MovieItemCellDelegate {
+    func tappedFavourite()
+}
+
 final class MovieItemCell: UICollectionViewCell {
     @IBOutlet weak var posterImage: UIImageView!
     @IBOutlet weak var titleBackgroundView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var btnFavourite: UIButton!
+    var character : CharacterModel?
+    var delegate : MovieItemCellDelegate?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         layer.cornerRadius = 8.0
@@ -19,8 +27,10 @@ final class MovieItemCell: UICollectionViewCell {
     }
     
     func setup(with movie: CharacterModel) {
+        self.character = movie
         posterImage.setImage(with: "\(movie.thumbnail?.path ?? "")\(AppConstants.ImagesExtend.portRaitUncanny)")
         titleLabel.text = movie.name
+        self.btnFavourite.setBackgroundImage(movie.isFavourited ?? false ? UIImage.init(named: "starFilled") : UIImage.init(named: "starEmpty"), for: .normal)
     }
     
     func setGradientBlaclBackground() {
@@ -33,5 +43,24 @@ final class MovieItemCell: UICollectionViewCell {
         gradientLayer.frame = titleBackgroundView.bounds
 
         titleBackgroundView.layer.insertSublayer(gradientLayer, at:0)
+    }
+    @IBAction func btnActFavourite(_ sender: Any) {
+        if self.character?.isFavourited ?? false{
+            var tempList = Defaults().getFavourite()
+            var index = 0
+            for item in tempList ?? []{
+                if item == self.character?.id {
+                    tempList?.remove(at: index)
+                }
+                index += 1
+            }
+            Defaults().saveFavourite(data: tempList ?? [])
+        }
+        else{
+            var tempList = Defaults().getFavourite()
+            tempList?.append(self.character?.id ?? 0)
+            Defaults().saveFavourite(data: tempList ?? [])
+        }
+        self.delegate?.tappedFavourite()
     }
 }

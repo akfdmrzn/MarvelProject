@@ -30,11 +30,24 @@
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="neQ-pU-6MA">
+                        <rect key="frame" x="220" y="10" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="neQ-pU-6MA" secondAttribute="height" multiplier="1:1" id="bXP-cH-hKF"/>
+                            <constraint firstAttribute="width" constant="40" id="l8A-hL-PLy"/>
+                        </constraints>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        <connections>
+                            <action selector="btnActFavourite:" destination="gTV-IL-0wX" eventType="touchUpInside" id="taE-gw-34s"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
             <constraints>
+                <constraint firstItem="neQ-pU-6MA" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="0KC-pu-44T"/>
                 <constraint firstAttribute="bottom" secondItem="w3Y-yk-w2B" secondAttribute="bottom" id="6kq-ZX-KZc"/>
                 <constraint firstAttribute="trailing" secondItem="w3Y-yk-w2B" secondAttribute="trailing" id="D1p-2r-7bC"/>
+                <constraint firstAttribute="trailing" secondItem="neQ-pU-6MA" secondAttribute="trailing" constant="10" id="Dde-wU-xil"/>
                 <constraint firstItem="w3Y-yk-w2B" firstAttribute="trailing" secondItem="IsG-Nb-MZG" secondAttribute="trailing" constant="10" id="E3W-V1-Mu4"/>
                 <constraint firstItem="IsG-Nb-MZG" firstAttribute="bottom" secondItem="w3Y-yk-w2B" secondAttribute="bottom" constant="-10" id="GH5-Gn-Bc9"/>
                 <constraint firstItem="vwB-NA-Dk4" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Lqu-tj-Zh0"/>
@@ -47,6 +60,7 @@
             </constraints>
             <size key="customSize" width="270" height="330"/>
             <connections>
+                <outlet property="btnFavourite" destination="neQ-pU-6MA" id="1bO-ry-oZO"/>
                 <outlet property="posterImage" destination="vwB-NA-Dk4" id="CGF-go-gsj"/>
                 <outlet property="titleBackgroundView" destination="w3Y-yk-w2B" id="Mdk-2s-Q0e"/>
                 <outlet property="titleLabel" destination="IsG-Nb-MZG" id="O2o-g6-nW4"/>

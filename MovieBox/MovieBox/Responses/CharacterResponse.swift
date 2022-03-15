@@ -58,6 +58,7 @@ public struct CharacterModel : Decodable, Equatable {
     public var stories : Stories?
     public var events : Events?
     public var urls : [Urls]?
+    public var isFavourited : Bool?
 
     public enum CodingKeys: String, CodingKey {
 
