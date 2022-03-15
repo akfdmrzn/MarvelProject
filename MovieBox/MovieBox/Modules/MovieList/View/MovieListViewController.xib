@@ -12,6 +12,7 @@
             <connections>
                 <outlet property="collectionView" destination="Mha-rR-6Go" id="Amh-ky-4dJ"/>
                 <outlet property="collectionViewHeightConstraint" destination="wLY-7Q-mP2" id="4SG-O1-nZW"/>
+                <outlet property="scrollView" destination="Unb-Rf-gy2" id="BBw-V2-qTB"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -43,25 +44,28 @@
                                     <rect key="frame" x="141.5" y="25" width="189" height="60"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7ex-GN-b9c">
-                                            <rect key="frame" x="5" y="11" width="40" height="37.5"/>
+                                            <rect key="frame" x="5" y="10" width="40" height="40"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="7ex-GN-b9c" secondAttribute="height" multiplier="1:1" id="1Eg-SH-NGp"/>
                                                 <constraint firstAttribute="width" constant="40" id="ikT-jk-59v"/>
                                             </constraints>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                            <state key="normal" backgroundImage="arrowshape.turn.up.left.fill" catalog="system"/>
+                                            <state key="normal" backgroundImage="left-arrow"/>
                                             <connections>
                                                 <action selector="btnActPager:" destination="-1" eventType="touchUpInside" id="F6K-bt-9eq"/>
                                             </connections>
                                         </button>
                                         <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UEi-FN-unR">
-                                            <rect key="frame" x="134.5" y="11" width="40" height="37.5"/>
+                                            <rect key="frame" x="134.5" y="10" width="40" height="40"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="40" id="ZgI-7I-UDp"/>
                                                 <constraint firstAttribute="width" secondItem="UEi-FN-unR" secondAttribute="height" multiplier="1:1" id="u15-EM-s4z"/>
                                             </constraints>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                            <state key="normal" backgroundImage="arrowshape.turn.up.right.fill" catalog="system"/>
+                                            <state key="normal" backgroundImage="right-arrow"/>
+                                            <connections>
+                                                <action selector="btnActPager:" destination="-1" eventType="touchUpInside" id="sNO-uw-rJj"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -110,8 +114,8 @@
         </view>
     </objects>
     <resources>
-        <image name="arrowshape.turn.up.left.fill" catalog="system" width="128" height="106"/>
-        <image name="arrowshape.turn.up.right.fill" catalog="system" width="128" height="106"/>
+        <image name="left-arrow" width="32" height="32"/>
+        <image name="right-arrow" width="32" height="32"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

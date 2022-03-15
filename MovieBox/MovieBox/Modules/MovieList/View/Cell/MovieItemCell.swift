@@ -2,13 +2,11 @@
 //  MovieItemCell.swift
 //  MovieBox
 //
-//  Created by Ömer Faruk Öztürk on 28.10.2019.
-//  Copyright © 2019 omerfarukozturk. All rights reserved.
+//  Created by Akif Demirezen on 28.10.2019.
+//  Copyright © 2019 akifdemirezen. All rights reserved.
 //
 
 import UIKit
-import Utilities
-import MovieBoxAPI
 
 final class MovieItemCell: UICollectionViewCell {
     @IBOutlet weak var posterImage: UIImageView!
@@ -21,7 +19,7 @@ final class MovieItemCell: UICollectionViewCell {
     }
     
     func setup(with movie: CharacterModel) {
-        posterImage.setImage(with: "\(movie.thumbnail?.path ?? "")/portrait_uncanny.jpg")
+        posterImage.setImage(with: "\(movie.thumbnail?.path ?? "")\(AppConstants.ImagesExtend.portRaitUncanny)")
         titleLabel.text = movie.name
     }
     

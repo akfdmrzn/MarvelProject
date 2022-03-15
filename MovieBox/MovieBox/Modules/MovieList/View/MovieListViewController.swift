@@ -2,17 +2,19 @@
 //  MovieListViewController.swift
 //  MovieBox
 //
-//  Created by Ömer Faruk Öztürk on 28.10.2019.
-//  Copyright © 2019 omerfarukozturk. All rights reserved.
+//  Created by Akif Demirezen on 28.10.2019.
+//  Copyright © 2019 akifdemirezen. All rights reserved.
 //
 
 import UIKit
-import Utilities
 
 final class MovieListViewController: UIViewController {
 
+    let indicatorView = IndicatorView.init(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
+    
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var collectionViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var scrollView: UIScrollView!
     private(set) var dataSource: MovieListDataSource?
     
     var viewModel: MovieListViewModelProtocol! {
@@ -27,7 +29,7 @@ final class MovieListViewController: UIViewController {
         super.viewDidLoad()
         
         registerCells()
-        viewModel.load()
+        viewModel.load(indexType: .defaultType)
     }
     
     override func viewWillLayoutSubviews() {
@@ -42,6 +44,8 @@ final class MovieListViewController: UIViewController {
         collectionView.dataSource = dataSource
         collectionView.delegate = dataSource
         collectionView.reloadData()
+        self.scrollView.setContentOffset(CGPoint.init(x: 0, y: -100), animated: true)
+        
     }
     
     // MARK: UI
@@ -63,10 +67,10 @@ final class MovieListViewController: UIViewController {
     @IBAction func btnActPager(_ sender: UIButton) {
         switch sender.tag {
         case 0:
-            
+            viewModel.load(indexType: .backType)
             break;
         case 1:
-            
+            viewModel.load(indexType: .nextType)
             break;
         default:
             break;
@@ -82,11 +86,17 @@ extension MovieListViewController: MovieListViewModelDelegate {
             self.title = title
         case .setLoading(let isLoading):
             DispatchQueue.main.async {
-                UIApplication.shared.isNetworkActivityIndicatorVisible = isLoading
+                if isLoading {
+                    self.view.addSubview(self.indicatorView)
+                    self.indicatorView.viewAnimate.play { finished in
+                        
+                    }
+                }
             }
         case .reloadMovieList:
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
+                self.indicatorView.removeFromSuperview()
                 self.reloaDataSource()
             }
         }

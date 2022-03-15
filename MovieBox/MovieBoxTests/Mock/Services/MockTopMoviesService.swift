@@ -1,18 +1,18 @@
 //
-//  MockTopMoviesService.swift
+//  MockCharactersListService.swift
 //  MovieBoxTests
 //
-//  Created by Ömer Faruk Öztürk on 28.10.2019.
-//  Copyright © 2019 omerfarukozturk. All rights reserved.
+//  Created by Akif Demirezen on 28.10.2019.
+//  Copyright © 2019 akifdemirezen. All rights reserved.
 //
 
 import Foundation
-import MovieBoxAPI
 
-final class MockTopMoviesService: TopMoviesServiceProtocol {
-    var movies: [Movie] = []
+final class MockCharactersListService: CharactersListServiceProtocol {
+    
+    var characterList: [CharacterModel]?
 
-    func fetchTopMovies(completion: @escaping (Result<TopMoviesResponse>) -> Void) {
-        completion(.success(TopMoviesResponse(results: movies)))
+    func fetchCharactersList(limit: Int, offSet: Int, completion: @escaping (Result<CharacterResponse>) -> Void) {
+//        completion(.success(CharacterResponse(from: characterList)))
     }
 }

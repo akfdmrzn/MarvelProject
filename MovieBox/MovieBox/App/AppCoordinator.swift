@@ -2,25 +2,24 @@
 //  AppCoordinator.swift
 //  MovieBox
 //
-//  Created by Ömer Faruk Öztürk on 27.10.2019.
-//  Copyright © 2019 omerfarukozturk. All rights reserved.
+//  Created by Akif Demirezen on 27.10.2019.
+//  Copyright © 2019 akifdemirezen. All rights reserved.
 //
 
 import UIKit
-import MovieBoxAPI
 
 class AppCoordinator: CoordinatorProtocol {
     let window: UIWindow?
     var rootViewController: UINavigationController!
     var apiEngine: APIEngine!
-    let apiClient: TopMoviesServiceProtocol!
-
+    let apiClient: CharactersListServiceProtocol!
+    
     var childCoordinator: CoordinatorProtocol?
     
     init(window: UIWindow) {
         self.window = window
         self.apiEngine = APIEngine()
-        self.apiClient = TopMoviesService(apiEngine: apiEngine)
+        self.apiClient = CharactersListService(apiEngine: apiEngine)
     }
     
     func start() {
@@ -39,15 +38,15 @@ class AppCoordinator: CoordinatorProtocol {
 
 extension AppCoordinator: MovieListCoordinatorViewModelDelegate {
     
-    func showDetails(of movie: CharacterModel) {
-        let detailCoordinator = MovieDetailCoordinator(navigationController: rootViewController, movie: movie)
+    func showDetails(of character: CharacterModel) {
+        let detailCoordinator = CharacterDetailCoordinator(navigationController: rootViewController, character: character)
         detailCoordinator.coordinatorDelegate = self
         childCoordinator = detailCoordinator
         detailCoordinator.start()
     }
 }
 
-extension AppCoordinator: MovieDetailCoordinatorDelegate {
+extension AppCoordinator: CharacterDetailCoordinatorDelegate {
     func requestDismissal() {
         rootViewController.dismiss(animated: true)
         childCoordinator = nil

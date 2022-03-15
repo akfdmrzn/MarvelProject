@@ -2,18 +2,17 @@
 //  MovieListViewModel.swift
 //  MovieBox
 //
-//  Created by Ömer Faruk Öztürk on 28.10.2019.
-//  Copyright © 2019 omerfarukozturk. All rights reserved.
+//  Created by Akif Demirezen on 28.10.2019.
+//  Copyright © 2019 akifdemirezen. All rights reserved.
 //
 
 import Foundation
-import MovieBoxAPI
 
 protocol MovieListViewModelProtocol {
     var delegate: MovieListViewModelDelegate? { get set }
     var coordinatorDelegate: MovieListCoordinatorViewModelDelegate? { get set }
     
-    func load()
+    func load(indexType : GetDataSourceIndexType)
     func getTitle() -> String
     func getMovieItem(at indexPath: IndexPath) -> CharacterModel
     func selectMovie(at index: Int)    
@@ -26,11 +25,17 @@ enum MovieListViewModelOutput: Equatable {
     case reloadMovieList
 }
 
-protocol MovieListViewModelDelegate: class {
+enum GetDataSourceIndexType: Int {
+    case defaultType = 0
+    case nextType = 1
+    case backType = 2
+}
+
+protocol MovieListViewModelDelegate {
     func handleViewModelOutput(_ output: MovieListViewModelOutput)
 }
 
-protocol MovieListCoordinatorViewModelDelegate: class {
+protocol MovieListCoordinatorViewModelDelegate {
     func showDetails(of content: CharacterModel)
 }
 
@@ -38,18 +43,32 @@ final class MovieListViewModel: MovieListViewModelProtocol {
     var coordinatorDelegate: MovieListCoordinatorViewModelDelegate?
     var delegate: MovieListViewModelDelegate?
 
-    var apiClient: TopMoviesServiceProtocol!
+    var apiClient: CharactersListServiceProtocol!
     var movies: [CharacterModel] = []
+    var limit: Int = 30
+    var offSet: Int = 0
     
-    init(apiClient: TopMoviesServiceProtocol) {
+    init(apiClient: CharactersListServiceProtocol) {
         self.apiClient = apiClient
     }
     
-    func load() {
+    func load(indexType : GetDataSourceIndexType) {
         notify(.updateTitle(getTitle()))
         notify(.setLoading(true))
-        
-        apiClient.fetchTopMovies { [weak self] (result) in
+        switch indexType {
+        case .defaultType:
+            self.offSet = 0
+            break;
+        case .nextType:
+            self.offSet += 30
+            break;
+        case .backType:
+            if self.offSet != 0 {
+                self.offSet -= 30
+            }
+            break;
+        }
+        apiClient.fetchCharactersList(limit: self.limit, offSet: self.offSet) { [weak self] (result) in
             guard let self = self else { return }
             self.notify(.setLoading(false))
             
@@ -64,7 +83,7 @@ final class MovieListViewModel: MovieListViewModelProtocol {
     }
     
     func getTitle() -> String {
-        return "Top Movies"
+        return "Characters"
     }
     
     func getMovieItem(at indexPath: IndexPath) -> CharacterModel {

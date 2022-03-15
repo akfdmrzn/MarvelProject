@@ -2,14 +2,12 @@
 //  ResourceLoader.swift
 //  MovieBoxTests
 //
-//  Created by Ömer Faruk Öztürk on 28.10.2019.
-//  Copyright © 2019 omerfarukozturk. All rights reserved.
+//  Created by Akif Demirezen on 28.10.2019.
+//  Copyright © 2019 akifdemirezen. All rights reserved.
 //
 
 import Foundation
 @testable import MovieBox
-import MovieBoxAPI
-import Utilities
 
 
 class ResourceLoader {

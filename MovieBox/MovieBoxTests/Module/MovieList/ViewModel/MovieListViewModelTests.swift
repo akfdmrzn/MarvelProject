@@ -2,12 +2,11 @@
 //  MovieListViewModelTests.swift
 //  MovieBoxTests
 //
-//  Created by Ömer Faruk Öztürk on 28.10.2019.
-//  Copyright © 2019 omerfarukozturk. All rights reserved.
+//  Created by Akif Demirezen on 28.10.2019.
+//  Copyright © 2019 akifdemirezen. All rights reserved.
 //
 
 import XCTest
-import MovieBoxAPI
 @testable import MovieBox
 
 class MovieListViewModelTests: XCTestCase {
@@ -16,7 +15,7 @@ class MovieListViewModelTests: XCTestCase {
     private var viewModel: MovieListViewModel!
     
     override func setUp() {
-        let client = MockTopMoviesService()
+        let client = MockCharactersListService()
         viewModel = MovieListViewModel(apiClient: client)
         view = MockView()
         viewModel.delegate = view
