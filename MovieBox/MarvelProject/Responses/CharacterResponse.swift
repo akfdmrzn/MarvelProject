@@ -74,6 +74,10 @@ public struct CharacterModel : Decodable, Equatable {
         case events = "events"
         case urls = "urls"
     }
+    
+    public init() {
+        
+    }
 
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)

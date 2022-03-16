@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import MovieBox
+@testable import MarvelProject
 
 class AppCoordinatorTest: XCTestCase {
     
@@ -21,7 +21,7 @@ class AppCoordinatorTest: XCTestCase {
         let coordinator = AppCoordinator(window: UIWindow(frame: UIScreen.main.bounds))
         coordinator.start()
         
-        coordinator.showDetails(of: try ResourceLoader.loadMovieItem(resource: .movie1))
+        coordinator.showDetails(of: try ResourceLoader.loadCharacterItem(resource: .character1))
         XCTAssertTrue(coordinator.rootViewController.presentedViewController is CharacterDetailViewController)
     }
 }
