@@ -27,6 +27,7 @@ enum MovieListViewModelOutput: Equatable {
     case setLoading(Bool)
     case reloadMovieList
     case reloadJustSections
+    case reloadEndOfScroll
 }
 
 protocol MovieListViewModelDelegate {
@@ -62,7 +63,7 @@ final class MovieListViewModel: MovieListViewModelProtocol {
         
     }
     
-    func fetchMovie(limit : Int,offSet : Int,isFavourited : Bool = false){
+    func fetchMovie(limit : Int,offSet : Int,isFavourited : Bool = false,isEndOfScrool : Bool = false){
         notify(.setLoading(true))
         apiClient.fetchCharactersList(limit: limit, offSet: offSet) { [weak self] (result) in
             guard let self = self else { return }
@@ -79,8 +80,12 @@ final class MovieListViewModel: MovieListViewModelProtocol {
                     index += 1
                 }
                 self.movies = data.data?.results ?? []
+                
                 if isFavourited {
                     self.notify(.reloadJustSections)
+                }
+                else if isEndOfScrool{
+                    self.notify(.reloadEndOfScroll)
                 }
                 else{
                     self.notify(.reloadMovieList)
@@ -96,9 +101,11 @@ final class MovieListViewModel: MovieListViewModelProtocol {
             self.limit += Constant.ScrollIncreaseLimit
         }
         else{
-            self.limit = Constant.ScrollTotalLimit
+            self.limit = Constant.ScrollTotalLimit //Service don't support more than 100 Items.
         }
-        self.fetchMovie(limit: self.limit, offSet: self.offSet)
+        if self.limit != Constant.ScrollTotalLimit{
+            self.fetchMovie(limit: self.limit, offSet: self.offSet,isEndOfScrool: true)
+        }
     }
     
     func reloadForFavourite() {

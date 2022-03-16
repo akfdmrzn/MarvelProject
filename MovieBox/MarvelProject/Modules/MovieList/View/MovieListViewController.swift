@@ -36,23 +36,26 @@ final class MovieListViewController: UIViewController {
     
     // MARK: Data
     
-    public func reloaDataSource(justSection : Bool = false) {
+    public func reloaDataSource() {
         dataSource = viewModel.getDataSource()
         collectionView.dataSource = dataSource
         collectionView.delegate = dataSource
-        if justSection {
-            collectionView.reloadItems(at: [IndexPath.init(item: 0, section: 0)])
-        }
-        else{
-            collectionView.reloadData()
-        }
-        if viewModel.getLimitCount() > 30 {
-            UIView.animate(withDuration: 0.3) {
-                self.collectionView.contentOffset.y = self.collectionView.contentOffset.y + ((AppConstants.ContentCollection.PosterImageRatio * self.collectionView.frame.size.width) / 2)
-            }
-        }
+        
     }
     
+    public func reloadAll() {
+        collectionView.reloadData()
+    }
+    
+    public func reloadJustItem() {
+        collectionView.reloadItems(at: [IndexPath.init(item: 0, section: 0)])
+    }
+    
+    public func reloadWhenEndOfScrool() {
+        UIView.animate(withDuration: 0.3) {
+            self.collectionView.contentOffset.y = self.collectionView.contentOffset.y + ((AppConstants.ContentCollection.PosterImageRatio * self.collectionView.frame.size.width) / 2)
+        }
+    }
     // MARK: UI
     
     private func registerCells() {
@@ -80,12 +83,21 @@ extension MovieListViewController: MovieListViewModelDelegate {
                 guard let self = self else { return }
                 self.indicatorView.removeFromSuperview()
                 self.reloaDataSource()
+                self.reloadAll()
             }
         case .reloadJustSections:
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
                 self.indicatorView.removeFromSuperview()
-                self.reloaDataSource(justSection: true)
+                self.reloaDataSource()
+                self.reloadJustItem()
+            }
+        case .reloadEndOfScroll:
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.indicatorView.removeFromSuperview()
+                self.reloaDataSource()
+                self.reloadWhenEndOfScrool()
             }
         }
     }
