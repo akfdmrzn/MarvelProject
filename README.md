@@ -1,11 +1,6 @@
-# MovieBox
+# Mrvel Project
 
-A demo app built using the MVVM-C architecture with Swift.
+MVVM-C structure used.
 
-It has three modules: Project, API, Utilities.
-
-Includes Unit Tests using XCTest.
-
-There is no dependency.
-
-The app lists Top Movies using [iTunes RSS feed.](https://rss.itunes.apple.com/en-us)
+- Used lottie library for animation
+- Used firebase for analyze
