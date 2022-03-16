@@ -2,7 +2,7 @@
 //  AppCoordinatorTests.swift
 //  MovieBoxTests
 //
-//  Created by Akif Demirezen on 27.10.2019.
+//  Created by Akif Demirezen on 15.03.2022.
 //  Copyright © 2019 akifdemirezen. All rights reserved.
 //
 

@@ -1,5 +1,5 @@
 //
-//  MovieListViewTests.swift
+//  CharacterListViewTests.swift
 //  MovieBoxTests
 //
 //  Created by Akif Demirezen on 23.11.2019.
@@ -9,12 +9,12 @@
 import XCTest
 @testable import MovieBox
 
-class MovieListViewTests: XCTestCase {
+class CharacterListViewTests: XCTestCase {
 
     func test_movieList_load()  {
         let service = MockCharactersListService()
-        let viewModel = MovieListViewModel(apiClient: service)
-        let viewController = MovieListViewController()
+        let viewModel = CharacterListViewModel(apiClient: service)
+        let viewController = CharacterListViewController()
         viewController.viewModel = viewModel
         
         _ = viewController.view

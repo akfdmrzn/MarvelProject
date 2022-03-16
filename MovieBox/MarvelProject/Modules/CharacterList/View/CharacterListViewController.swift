@@ -1,5 +1,5 @@
 //
-//  MovieListViewController.swift
+//  CharacterListViewController.swift
 //  MovieBox
 //
 //  Created by Akif Demirezen on 28.10.2019.
@@ -8,14 +8,14 @@
 
 import UIKit
 
-final class MovieListViewController: UIViewController {
+final class CharacterListViewController: UIViewController {
 
     let indicatorView = IndicatorView.init(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
     
     @IBOutlet weak var collectionView: UICollectionView!
-    private(set) var dataSource: MovieListDataSource?
+    private(set) var dataSource: CharacterListDataSource?
     
-    var viewModel: MovieListViewModelProtocol! {
+    var viewModel: CharacterListViewModelProtocol! {
         didSet {
             viewModel.delegate = self
         }
@@ -59,13 +59,13 @@ final class MovieListViewController: UIViewController {
     // MARK: UI
     
     private func registerCells() {
-        collectionView.register(MovieItemCell.self)
+        collectionView.register(CharacterItemCell.self)
     }
     
 }
 
-extension MovieListViewController: MovieListViewModelDelegate {
-    func handleViewModelOutput(_ output: MovieListViewModelOutput) {
+extension CharacterListViewController: CharacterListViewModelDelegate {
+    func handleViewModelOutput(_ output: CharacterListViewModelOutput) {
         switch output {
         case .updateTitle(let title):
             self.title = title

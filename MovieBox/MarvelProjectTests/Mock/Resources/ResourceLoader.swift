@@ -7,18 +7,15 @@
 //
 
 import Foundation
-@testable import MovieBox
-
+@testable import MarvelProject
 
 class ResourceLoader {
     
-    enum MovieResource: String {
-        case movie1
-        case movie2
-        case movie3
+    enum MarvelResource: String {
+        case character1
     }
     
-    static func loadMovie(resource: MovieResource) throws -> Movie {
+    static func loadCharacter(resource: MovieResource) throws -> CharacterModel {
         let bundle = Bundle.init(for: ResourceLoader.self)
         let url = try bundle.url(forResource: resource.rawValue, withExtension: "json").unwrap()
         let data = try Data(contentsOf: url)
@@ -27,8 +24,8 @@ class ResourceLoader {
         return movie
     }
     
-    static func loadMovieItem(resource: MovieResource) throws -> MovieItem {
-        let movie = try loadMovie(resource: resource)
-        return MovieItem(movie)
+    static func loadCharacterItem(resource: MarvelResource) throws -> CharacterResponse {
+        let character = try loadCharacter(resource: resource)
+        return CharacterResponse.init(charactersList: [character])
     }
 }

@@ -1,5 +1,5 @@
 //
-//  MovieListViewModelTests.swift
+//  CharacterListViewModelTests.swift
 //  MovieBoxTests
 //
 //  Created by Akif Demirezen on 28.10.2019.
@@ -7,16 +7,16 @@
 //
 
 import XCTest
-@testable import MovieBox
+@testable import MarvelProject
 
-class MovieListViewModelTests: XCTestCase {
+class CharacterListViewModelTests: XCTestCase {
     
     private var view: MockView!
-    private var viewModel: MovieListViewModel!
+    private var viewModel: CharacterListViewModel!
     
     override func setUp() {
         let client = MockCharactersListService()
-        viewModel = MovieListViewModel(apiClient: client)
+        viewModel = CharacterListViewModel(apiClient: client)
         view = MockView()
         viewModel.delegate = view
     }
@@ -53,10 +53,10 @@ class MovieListViewModelTests: XCTestCase {
     }
 }
 
-private class MockView: MovieListViewModelDelegate {
-    var outputs: [MovieListViewModelOutput] = []
+private class MockView: CharacterListViewModelDelegate {
+    var outputs: [CharacterListViewModelOutput] = []
     
-    func handleViewModelOutput(_ output: MovieListViewModelOutput) {
+    func handleViewModelOutput(_ output: CharacterListViewModelOutput) {
         outputs.append(output)
     }
     

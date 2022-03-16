@@ -1,5 +1,5 @@
 //
-//  MovieItemCell.swift
+//  CharacterItemCell.swift
 //  MovieBox
 //
 //  Created by Akif Demirezen on 28.10.2019.
@@ -8,17 +8,17 @@
 
 import UIKit
 
-protocol MovieItemCellDelegate {
+protocol CharacterItemCellDelegate {
     func tappedFavourite()
 }
 
-final class MovieItemCell: UICollectionViewCell {
+final class CharacterItemCell: UICollectionViewCell {
     @IBOutlet weak var posterImage: UIImageView!
     @IBOutlet weak var titleBackgroundView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var btnFavourite: UIButton!
     var character : CharacterModel?
-    var delegate : MovieItemCellDelegate?
+    var delegate : CharacterItemCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()

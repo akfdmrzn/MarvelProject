@@ -1,5 +1,5 @@
 //
-//  MovieListViewModel.swift
+//  CharacterListViewModel.swift
 //  MovieBox
 //
 //  Created by Akif Demirezen on 28.10.2019.
@@ -8,21 +8,21 @@
 
 import Foundation
 
-protocol MovieListViewModelProtocol {
-    var delegate: MovieListViewModelDelegate? { get set }
+protocol CharacterListViewModelProtocol {
+    var delegate: CharacterListViewModelDelegate? { get set }
     var coordinatorDelegate: MovieListCoordinatorViewModelDelegate? { get set }
     
     func load()
     func getTitle() -> String
     func getMovieItem(at indexPath: IndexPath) -> CharacterModel
     func selectMovie(at index: Int)
-    func getDataSource() -> MovieListDataSource
+    func getDataSource() -> CharacterListDataSource
     func didComeEndOfScroll()
     func reloadForFavourite()
     func getLimitCount() -> Int
 }
 
-enum MovieListViewModelOutput: Equatable {
+enum CharacterListViewModelOutput: Equatable {
     case updateTitle(String)
     case setLoading(Bool)
     case reloadMovieList
@@ -30,27 +30,22 @@ enum MovieListViewModelOutput: Equatable {
     case reloadEndOfScroll
 }
 
-protocol MovieListViewModelDelegate {
-    func handleViewModelOutput(_ output: MovieListViewModelOutput)
+protocol CharacterListViewModelDelegate {
+    func handleViewModelOutput(_ output: CharacterListViewModelOutput)
 }
 
 protocol MovieListCoordinatorViewModelDelegate {
     func showDetails(of content: CharacterModel)
 }
 
-final class MovieListViewModel: MovieListViewModelProtocol {
-    
-    private enum Constant {
-        static let ScrollIncreaseLimit : Int = 30
-        static let ScrollTotalLimit : Int = 100
-    }
+final class CharacterListViewModel: CharacterListViewModelProtocol {
     
     var coordinatorDelegate: MovieListCoordinatorViewModelDelegate?
-    var delegate: MovieListViewModelDelegate?
+    var delegate: CharacterListViewModelDelegate?
     
     var apiClient: CharactersListServiceProtocol!
     var movies: [CharacterModel] = []
-    var limit: Int = Constant.ScrollIncreaseLimit
+    var limit: Int = AppConstants.ParameterValues.ScrollIncreaseLimit
     var offSet: Int = 0
     
     init(apiClient: CharactersListServiceProtocol) {
@@ -97,13 +92,11 @@ final class MovieListViewModel: MovieListViewModelProtocol {
     }
     
     func didComeEndOfScroll() {
-        if self.limit <= 70 {
-            self.limit += Constant.ScrollIncreaseLimit
+        self.limit += AppConstants.ParameterValues.ScrollIncreaseLimit
+        if self.limit > AppConstants.ParameterValues.ScrollTotalLimit {
+            self.limit = AppConstants.ParameterValues.ScrollTotalLimit //Service don't support more than 100 Items.
         }
-        else{
-            self.limit = Constant.ScrollTotalLimit //Service don't support more than 100 Items.
-        }
-        if self.limit != Constant.ScrollTotalLimit{
+        if self.limit != AppConstants.ParameterValues.ScrollTotalLimit{
             self.fetchMovie(limit: self.limit, offSet: self.offSet,isEndOfScrool: true)
         }
     }
@@ -129,23 +122,23 @@ final class MovieListViewModel: MovieListViewModelProtocol {
         return self.limit
     }
     
-    func getDataSource() -> MovieListDataSource {
-        let didSelectItemHandler : MovieListDataSource.MovieDidSelectItemHandler = {  [weak self] index in
+    func getDataSource() -> CharacterListDataSource {
+        let didSelectItemHandler : CharacterListDataSource.MovieDidSelectItemHandler = {  [weak self] index in
             self?.selectMovie(at: index)
         }
         
-        let comeEndOfScroll : MovieListDataSource.ScrollEndOfHandler = {
+        let comeEndOfScroll : CharacterListDataSource.ScrollEndOfHandler = {
             self.didComeEndOfScroll()
         }
         
-        let reloadForFavourite : MovieListDataSource.ReloadForFavouriteHandler = {
+        let reloadForFavourite : CharacterListDataSource.ReloadForFavouriteHandler = {
             self.reloadForFavourite()
         }
         
-        return MovieListDataSource(with: movies, didSelectItemHandler: didSelectItemHandler, comeEndOfScroll: comeEndOfScroll, reloadForFavourite: reloadForFavourite)
+        return CharacterListDataSource(with: movies, didSelectItemHandler: didSelectItemHandler, comeEndOfScroll: comeEndOfScroll, reloadForFavourite: reloadForFavourite)
     }
     
-    private func notify(_ output: MovieListViewModelOutput) {
+    private func notify(_ output: CharacterListViewModelOutput) {
         delegate?.handleViewModelOutput(output)
     }
 }

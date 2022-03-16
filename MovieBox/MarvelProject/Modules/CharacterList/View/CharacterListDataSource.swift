@@ -1,5 +1,5 @@
 //
-//  MovieListDataSource.swift
+//  CharacterListDataSource.swift
 //  MovieBox
 //
 //  Created by Akif Demirezen on 28.10.2019.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class MovieListDataSource: NSObject {
+final class CharacterListDataSource: NSObject {
     
     typealias MovieDidSelectItemHandler = (Int) -> ()
     typealias ScrollEndOfHandler = () -> ()
@@ -28,13 +28,13 @@ final class MovieListDataSource: NSObject {
     }
 }
 
-extension MovieListDataSource: UICollectionViewDataSource {
+extension CharacterListDataSource: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return movies.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieItemCell.identifier, for: indexPath) as! MovieItemCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CharacterItemCell.identifier, for: indexPath) as! CharacterItemCell
         let movie = movies[indexPath.row]
         cell.setup(with: movie)
         cell.delegate = self
@@ -42,7 +42,7 @@ extension MovieListDataSource: UICollectionViewDataSource {
     }
 }
 
-extension MovieListDataSource: UICollectionViewDelegate {
+extension CharacterListDataSource: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         didSelectItemHandler(indexPath.row)
     }
@@ -54,7 +54,7 @@ extension MovieListDataSource: UICollectionViewDelegate {
     }
 }
 
-extension MovieListDataSource: UICollectionViewDelegateFlowLayout {
+extension CharacterListDataSource: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width: CGFloat = (collectionView.bounds.width - AppConstants.ContentCollection.HorizontalSpaceBetweenItems * 3) / 2
         let height: CGFloat = width * AppConstants.ContentCollection.PosterImageRatio
@@ -75,7 +75,7 @@ extension MovieListDataSource: UICollectionViewDelegateFlowLayout {
         return UIEdgeInsets(top: topMargin, left: leftMargin, bottom: topMargin, right: leftMargin)
     }
 }
-extension MovieListDataSource : MovieItemCellDelegate{
+extension CharacterListDataSource : CharacterItemCellDelegate{
     func tappedFavourite() {
         self.reloadForFavourite()
     }

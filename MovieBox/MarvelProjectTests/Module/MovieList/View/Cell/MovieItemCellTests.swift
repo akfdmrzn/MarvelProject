@@ -1,5 +1,5 @@
 //
-//  MovieItemCellTests.swift
+//  CharacterItemCellTests.swift
 //  MovieBoxTests
 //
 //  Created by Akif Demirezen on 23.11.2019.
@@ -10,7 +10,7 @@ import XCTest
 @testable import MovieBox
 @testable import Utilities
 
-class MovieItemCellTests: XCTestCase {
+class CharacterItemCellTests: XCTestCase {
 
     func test_cell_rendersCorrectData() throws {
         let cell = makeSUT()
@@ -22,9 +22,9 @@ class MovieItemCellTests: XCTestCase {
         XCTAssertNotNil(cell.titleBackgroundView)
     }
     
-    private func makeSUT() -> MovieItemCell {
-        let nib = UINib(nibName: MovieItemCell.identifier, bundle: nil)
-        let cell = nib.instantiate(withOwner: nil, options: [:]).first as! MovieItemCell
+    private func makeSUT() -> CharacterItemCell {
+        let nib = UINib(nibName: CharacterItemCell.identifier, bundle: nil)
+        let cell = nib.instantiate(withOwner: nil, options: [:]).first as! CharacterItemCell
         return cell
     }
 }

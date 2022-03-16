@@ -16,6 +16,12 @@ struct AppConstants {
         static let VerticleSpaceBetweenItems: CGFloat = 8
     }
     
+    struct ParameterValues {
+        static let CharactersLimit : Int = 10
+        static let ScrollIncreaseLimit : Int = 30
+        static let ScrollTotalLimit : Int = 100
+    }
+    
     struct API {
         static let baseURL = "http://gateway.marvel.com"
         static let md5PublicAndPrivateKey = "?ts=1&apikey=1f60e169eda9fc8114337914564ac214&hash=2c36299d1a589ce4ed0b9278fda0b92c"
